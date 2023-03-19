@@ -38,22 +38,36 @@ public class AnalogClock extends JFrame implements Observer {
 		g2.setColor(Color.BLACK);
 		g2.drawOval(50, 50, 200, 200);
 
-		// vẽ kim giờ
-
-		int[] pos = calculateHandPosition(hour % 12, minute, second, 60);
-		g2.setColor(Color.BLACK);
-		g2.drawLine(150, 150, pos[0], pos[1]);
-
-		// vẽ kim phút
-		pos = calculateHandPosition(0, minute , second , 95);
-		g2.setColor(Color.BLACK);
-		g2.drawLine(150, 150, pos[0], pos[1]);
-
-		// vẽ kim giây
-		pos = calculateHandPosition(0, 0, second *60, 95);
-		g2.setColor(Color.RED);
-		g2.drawLine(150, 150, pos[0], pos[1]);
+//		// vẽ kim giờ
+//
+//		int[] pos = calculateHandPosition(hour % 12, minute, second, 60);
+//		g2.setColor(Color.BLACK);
+//		g2.drawLine(150, 150, pos[0], pos[1]);
+//
+//		// vẽ kim phút
+//		pos = calculateHandPosition(0, minute , second , 95);
+//		g2.setColor(Color.BLACK);
+//		g2.drawLine(150, 150, pos[0], pos[1]);
+//
+//		// vẽ kim giây
+//		pos = calculateHandPosition(0, 0, second *60, 95);
+//		g2.setColor(Color.RED);
+//		g2.drawLine(150, 150, pos[0], pos[1]);
+		
+		drawHands(g2, second, minute, hour);
 	}
+	
+	 public void drawHands(Graphics g, double second, double minute, double hours) {
+         double rSecond = (second * 6) * (Math.PI) / 180;
+         double rMinute = ((minute + (second / 60)) * 6) * (Math.PI) / 180;
+         double rHours = ((hours + (minute / 60)) * 30) * (Math.PI) / 180;
+         g.setColor(Color.RED);
+         g.drawLine(150, 150, 150 + (int)(100 * Math.cos(rSecond - (Math.PI / 2))), 150 + (int)(100 * Math.sin(rSecond - (Math.PI / 2))));
+         g.setColor(Color.BLACK);
+         g.drawLine(150, 150, 150 + (int)(70 * Math.cos(rMinute - (Math.PI / 2))), 150 + (int)(70 * Math.sin((rMinute - (Math.PI / 2)))));
+         g.drawLine(150, 150, 150 + (int)(50 * Math.cos(rHours - (Math.PI / 2))), 150 + (int)(50 * Math.sin(rHours - (Math.PI / 2))));
+         //g.drawLine(150, 150, 150+(int)(100*Math.sin(2*Math.PI)),150+(int)(100*Math.cos(2*Math.PI)));
+     }
 
 	 private int[] calculateHandPosition(int handValue, int minuteValue, int secondValue, int handLength) {
 	        int[] result = new int[2];
